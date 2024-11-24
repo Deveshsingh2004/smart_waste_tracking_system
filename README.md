@@ -10,6 +10,7 @@ An **IoT-driven solution** designed for municipal corporations to optimize waste
 
 ## Benefits
 - Cleaner cities through optimized waste collection.
+- Efficient Waste collection  system.
 - Cost-effective operations for municipal corporations.
 - Reduced fuel consumption and manual effort.
 

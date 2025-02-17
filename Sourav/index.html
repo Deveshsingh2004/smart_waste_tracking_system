@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sehore, MP - Futuristic Interactive Map</title>
+    <title>Sehore, MP - Interactive Map</title>
 
-    <!-- Leaflet.js CSS -->
+    <!-- Leaflet.js CSS (for OpenStreetMap) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
 
     <!-- Custom CSS -->
@@ -15,7 +15,7 @@
 
     <div class="container">
         <h1>📍 Sehore, Madhya Pradesh</h1>
-        <p class="subtitle">Explore the historic and scenic beauty of Sehore with an interactive map.</p>
+        <p class="subtitle">Explore Sehore with real-time location updates.</p>
 
         <div id="map"></div> <!-- OpenStreetMap Container -->
 
@@ -29,10 +29,12 @@
         <!-- Additional Info Section -->
         <div class="info-box">
             <h3>🌟 About Sehore</h3>
-            <p>
-                Sehore is a historic town in Madhya Pradesh, known for its rich cultural heritage, temples, and picturesque landscapes. 
-                Located near Bhopal, it offers a peaceful yet vibrant environment.
-            </p>
+            <p>Sehore is a historic town in Madhya Pradesh, known for its cultural heritage.</p>
+            
+            <!-- Dynamic API Data -->
+            <div id="info-data">
+                <p>Fetching data...</p>
+            </div>
         </div>
     </div>
 
@@ -44,7 +46,6 @@
 
 </body>
 </html>
-
 
 
 

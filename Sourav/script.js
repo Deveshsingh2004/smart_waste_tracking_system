@@ -65,4 +65,3 @@ fetch('https://ucnhoyjc08.execute-api.ap-south-1.amazonaws.com/dustbins')
 document.getElementById('refresh-map').addEventListener('click', () => {
     location.reload();
 });
-

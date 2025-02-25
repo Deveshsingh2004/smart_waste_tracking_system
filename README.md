@@ -1,28 +1,34 @@
-# Smart Garbage Management System
+# 🗑️ Smart Waste Management System
 
-An **IoT-driven solution** designed for municipal corporations to optimize waste collection. The system monitors garbage bin levels, stores data in a centralized database, and provides garbage trucks with prioritized routes to improve efficiency, reduce costs, and ensure cleaner cities.
+A **Smart Waste Management System** that leverages an **Arduino-based setup** with **ultrasonic and weight sensors** to monitor dustbin fill levels. The system collects real-time data and triggers notifications when bins reach capacity. Additionally, a **web dashboard** allows for real-time monitoring and management.
 
-## Features
-- Real-time garbage bin monitoring using IoT sensors.
-- Centralized database for storing bin fill levels.
-- Smart routing for garbage trucks to prioritize high-fill bins.
-- Enhanced efficiency and reduced operational costs.
+## 🚀 Features
 
-## Benefits
-- Cleaner cities through optimized waste collection.
-- Efficient Waste collection  system.
-- Cost-effective operations for municipal corporations.
-- Reduced fuel consumption and manual effort.
+- 📊 **Real-time Monitoring:** Collects bin data (fill percentage, weight, location) and updates a database.
+- 🌍 **Geolocation Tracking:** Stores the **latitude and longitude** of bins for optimized waste collection.
+- 🔔 **Automated Alerts:** Triggers **SMS and push notifications** when a bin reaches 80% capacity.
+- 📡 **Cloud Integration:** Uses an **API Gateway and AWS Lambda** to handle notifications.
+- 🖥️ **Web Dashboard:** Displays real-time bin status and analytics.
 
-## Tech Stack
-- **Hardware**: IoT sensors for real-time monitoring.
-- **Backend**: Database for data storage and analysis.
-- **Frontend**: Dashboard for route prioritization and data visualization.
+## 🛠️ Tech Stack
 
-## How It Works
-1. IoT sensors detect garbage levels in bins.
-2. Data is sent to a centralized database.
-3. Garbage trucks receive prioritized routes based on bin fill levels.
-4. Routes are optimized for efficiency and fuel savings.
+- **Hardware:** Arduino, Ultrasonic Sensor, Weight Sensor
+- **Software:** C++ (Arduino), Python/Node.js (Server)
+- **Cloud Services:** AWS Lambda, API Gateway, DynamoDB (or any other database)
+- **Frontend:** HTML, CSS, JavaScript (for the web dashboard)
+- **Backend:** Node.js/Python (to manage API requests)
 
-Contribute to creating smarter, cleaner cities with this innovative project!
+## ⚙️ System Workflow
+
+1. **Data Collection:** Sensors detect bin fill levels and weight.
+2. **Database Update:** Bin data (address, lat, long, weight, fill %) is stored.
+3. **Notification Trigger:** When a bin reaches **80% capacity**, a **POST request** is sent to the API Gateway.
+4. **AWS Lambda Execution:** The function sends an **SMS & push notification** to the authorities.
+5. **Web Dashboard:** Displays bin statuses for real-time monitoring.
+
+## 📦 Installation
+
+### 🔌 Hardware Setup
+1. Connect the **Ultrasonic Sensor** to measure fill levels.
+2. Connect the **Weight Sensor** to measure bin weight.
+3. Upload the **Arduino code** to read sensor data.

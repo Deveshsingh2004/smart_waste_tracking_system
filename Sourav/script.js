@@ -13,8 +13,8 @@ L.marker([23.2053, 77.0807]).addTo(map)
 
 // Dustbin Data with Fill Percentage (hardcoded)
 const dustbinData = [
-    { lat: 23.2100, lon: 77.0850, fill: 70, img: 'Dustbin.png' }, // Dustbin 1
-    { lat: 23.1985, lon: 77.0742, fill: 45, img: 'Dustbin.png' }  // Dustbin 2
+    { lat: 23.2100, lon: 77.0850, fill: 70, img: 'dustbin.png' }, // Dustbin 1
+    { lat: 23.1985, lon: 77.0742, fill: 45, img: 'dustbin.png' }  // Dustbin 2
 ];
 
 // Custom Icon for Dustbin
@@ -26,7 +26,7 @@ const dustbinIcon = L.icon({
 });
 
 // Fetch Data from Updated API
-fetch('https://ucnhoyjc08.execute-api.ap-south-1.amazonaws.com/dustbins')
+fetch('https://ucnhoyjc08.execute-api.ap-south-1.amazonaws.com')
     .then(response => response.json()) // Assuming the response is JSON
     .then(data => {
         // Use fetched data if available, otherwise use hardcoded data
@@ -39,7 +39,7 @@ fetch('https://ucnhoyjc08.execute-api.ap-south-1.amazonaws.com/dustbins')
                 .bindPopup(`
                     <div style="text-align:center;">
                         <b>🗑️ Dustbin</b><br>
-                        <img src="${dustbin.img}" alt="Dustbin" width="100"><br>
+                        <img src="dustbin.png" alt="Dustbin" width="100"><br>
                         Fill Level: <b>${dustbin.fill}%</b>
                     </div>
                 `);

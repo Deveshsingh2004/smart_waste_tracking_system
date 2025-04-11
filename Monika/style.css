@@ -1,0 +1,115 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Title Styling */
+h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    color: #00e6ff;
+}
+
+/* Description */
+p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+/* Map Container */
+.map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    margin-top: 20px;
+}
+
+.map-wrapper {
+    width: 80%;
+    max-width: 900px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+    border: 2px solid #00e6ff;
+}
+
+/* Map itself */
+#map {
+    height: 500px;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+}
+
+/* Fixed Location Info */
+.fixed-location {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+}
+
+.fixed-location span {
+    font-weight: bold;
+    color: #ffcc00;
+}
+
+/* Dustbin Marker Styling */
+.dustbin-marker {
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
+    transition: transform 0.3s ease-in-out;
+}
+
+.dustbin-marker:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Refresh Button */
+#refresh-map {
+    margin-top: 15px;
+    padding: 12px 25px;
+    background: #ff5733;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+#refresh-map:hover {
+    background: #ff2e00;
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .map-wrapper {
+        width: 95%;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    .fixed-location {
+        font-size: 0.9rem;
+    }
+}

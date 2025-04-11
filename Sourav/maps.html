@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sehore, MP - Interactive Map</title>
+
+    <!-- Leaflet CSS (For Map) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="mapstyle.css">
+</head>
+<body>
+
+    <h2>📍 Sehore, Madhya Pradesh</h2>
+    <p>Explore Sehore with real-time location updates.</p>
+
+    <div class="map-container">
+        <div class="map-wrapper">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <div class="fixed-location">
+        📌 Fixed Location: <span>Sehore Bus Stand</span> <br>
+        🌍 Latitude: <span>23.2053</span> | Longitude: <span>77.0807</span>
+    </div>
+
+    <button id="refresh-map">Refresh Map</button>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="mapscript.js"></script>
+
+</body>
+</html>

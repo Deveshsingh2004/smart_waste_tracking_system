@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Garbage Collection Analytics</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="graphstyle.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="data.js" defer></script>
+    <script src="graphscript.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Smart Garbage Collection Analytics</h1>
+
+      <!-- Key Metrics -->
+      <div class="metrics">
+        <div class="metric">
+          <h3>Total Waste Collected</h3>
+          <p id="totalWaste">0 kg</p>
+        </div>
+        <div class="metric">
+          <h3>Bins Collected Today</h3>
+          <p id="binsCollected">0</p>
+        </div>
+        <div class="metric">
+          <h3>On-Time Collection Rate</h3>
+          <p id="onTimeRate">0%</p>
+        </div>
+      </div>
+
+      <!-- Charts and Maps -->
+      <div class="grid">
+        <div class="card">
+          <h2>Garbage Fill Levels</h2>
+          <canvas id="fillLevelChart"></canvas>
+        </div>
+        <div class="card">
+          <h2>Peak Garbage Locations</h2>
+          <div id="map"></div>
+        </div>
+        <div class="card">
+          <h2>Waste Composition</h2>
+          <canvas id="wasteCompositionChart"></canvas>
+        </div>
+        <div class="card">
+          <h2>Collection Efficiency</h2>
+          <canvas id="collectionEfficiencyChart"></canvas>
+        </div>
+        <div class="card">
+          <h2>Garbage Generation Trends</h2>
+          <canvas id="generationTrendsChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

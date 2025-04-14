@@ -1,127 +1,206 @@
-// Initialize Metrics
-document.getElementById("totalWaste").textContent = `${mockData.totalWaste} kg`;
-document.getElementById("binsCollected").textContent = mockData.binsCollected;
-document.getElementById("onTimeRate").textContent = `${mockData.onTimeRate}%`;
+const api = "http://localhost:3000/api";
 
-// Garbage Fill Levels Chart
-const fillLevelCtx = document.getElementById("fillLevelChart").getContext("2d");
-new Chart(fillLevelCtx, {
-  type: "line",
-  data: {
-    labels: ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00"],
-    datasets: [
-      {
-        label: "Fill Level (%)",
-        data: mockData.fillLevels,
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 2,
-        fill: false,
-      },
-    ],
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 100,
+// Fetch data function
+async function fetchData(endpoint) {
+  try {
+    console.log(`Fetching data from endpoint: ${endpoint}`);
+    const res = await fetch(`${api}/${endpoint}`);
+
+    // Check if the response is empty or not successful
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const text = await res.text(); // Get response as text
+    console.log("Raw response text:", text); // Log raw response
+
+    // If the response is empty, throw an error
+    if (!text) {
+      throw new Error("Empty response body");
+    }
+
+    // Parse the text into JSON
+    const data = JSON.parse(text);
+    console.log(`Data received from ${endpoint}:`, data);
+
+    // Check if the response contains the "data" field and return it
+    if (data.success && data.data) {
+      return data.data;
+    } else {
+      console.error(`Error: Missing 'data' field in response for ${endpoint}`);
+      return [];
+    }
+  } catch (err) {
+    console.error(`Error fetching ${endpoint}:`, err);
+    return [];
+  }
+}
+
+// Render charts function
+async function renderCharts() {
+  // 1. Weekly Summary
+  console.log("Fetching weekly summary data..."); // Added console log
+  const summary = await fetchData("weekly-summary");
+
+  if (!Array.isArray(summary)) {
+    console.error("Weekly Summary data is not an array:", summary);
+    return;
+  }
+
+  const week = summary.map((s) => new Date(s.week_start).toLocaleDateString());
+  console.log("Rendering weekly summary chart with data:", { week, summary });
+
+  new Chart(document.getElementById("weeklySummaryChart"), {
+    type: "bar",
+    data: {
+      labels: week,
+      datasets: [
+        {
+          label: "Plastic",
+          data: summary.map((s) => s.plastic),
+          backgroundColor: "#4CAF50",
+        },
+        {
+          label: "Organic",
+          data: summary.map((s) => s.bio),
+          backgroundColor: "#FFC107",
+        },
+        {
+          label: "General",
+          data: summary.map((s) => s.non_bio),
+          backgroundColor: "#F44336",
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Weekly Waste Summary by Type (kg)",
+        },
       },
     },
-  },
-});
+  });
 
-// Waste Composition Chart
-const wasteCompositionCtx = document
-  .getElementById("wasteCompositionChart")
-  .getContext("2d");
-new Chart(wasteCompositionCtx, {
-  type: "doughnut",
-  data: {
-    labels: ["Organic", "Plastic", "Metal", "Paper"],
-    datasets: [
-      {
-        label: "Waste Composition (kg)",
-        data: Object.values(mockData.wasteComposition),
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  },
-});
+  // 2. Weekly Peaks
+  console.log("Fetching weekly peaks data...");
+  const peaks = await fetchData("weekly-peaks");
 
-// Collection Efficiency Chart
-const collectionEfficiencyCtx = document
-  .getElementById("collectionEfficiencyChart")
-  .getContext("2d");
-new Chart(collectionEfficiencyCtx, {
-  type: "bar",
-  data: {
-    labels: ["Truck 1", "Truck 2", "Truck 3", "Truck 4"],
-    datasets: [
-      {
-        label: "Efficiency (%)",
-        data: mockData.collectionEfficiency,
-        backgroundColor: "rgba(153, 102, 255, 0.2)",
-        borderColor: "rgba(153, 102, 255, 1)",
-        borderWidth: 1,
-      },
-    ],
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 100,
+  if (!Array.isArray(peaks)) {
+    console.error("Weekly Peaks data is not an array:", peaks);
+    return;
+  }
+
+  const peakDays = peaks.map(
+    (p) => `${p.day_of_week.trim()} (ID: ${p.dustbin_id})`
+  );
+  console.log("Rendering weekly peaks chart with data:", { peakDays, peaks });
+
+  new Chart(document.getElementById("weeklyPeaksChart"), {
+    type: "bar",
+    data: {
+      labels: peakDays,
+      datasets: [
+        {
+          label: "Avg Fill (%)",
+          data: peaks.map((p) => p.avg_fill),
+          backgroundColor: "#2196F3",
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "Weekly Peaks per Dustbin",
+        },
       },
     },
-  },
-});
+  });
 
-// Garbage Generation Trends Chart
-const generationTrendsCtx = document
-  .getElementById("generationTrendsChart")
-  .getContext("2d");
-new Chart(generationTrendsCtx, {
-  type: "line",
-  data: {
-    labels: mockData.generationTrends.labels,
-    datasets: [
-      {
-        label: "Waste Generated (kg)",
-        data: mockData.generationTrends.data,
-        borderColor: "rgba(255, 159, 64, 1)",
-        borderWidth: 2,
-        fill: false,
-      },
-    ],
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true,
+  // 3. Average Fill by Hour
+  console.log("Fetching average fill by hour data...");
+  const hourly = await fetchData("avg-fill-hour");
+
+  if (!Array.isArray(hourly)) {
+    console.error("Average Fill by Hour data is not an array:", hourly);
+    return;
+  }
+
+  const groupedByBin = {};
+  hourly.forEach((item) => {
+    if (!groupedByBin[item.dustbin_id])
+      groupedByBin[item.dustbin_id] = { hours: [], fills: [] };
+    groupedByBin[item.dustbin_id].hours.push(item.hour_of_day);
+    groupedByBin[item.dustbin_id].fills.push(item.avg_fill);
+  });
+
+  const datasets = Object.entries(groupedByBin).map(([id, data], i) => ({
+    label: `Dustbin ${id}`,
+    data: data.fills,
+    borderColor: `hsl(${i * 60}, 70%, 50%)`,
+    fill: false,
+  }));
+
+  console.log("Rendering average fill by hour chart with data:", {
+    hourly,
+    groupedByBin,
+    datasets,
+  });
+
+  new Chart(document.getElementById("avgFillByHourChart"), {
+    type: "line",
+    data: {
+      labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+      datasets,
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "Average Fill by Hour",
+        },
       },
     },
-  },
-});
+  });
 
-// Leaflet Map for Peak Garbage Locations
-const map = L.map("map").setView([51.505, -0.09], 13);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "© OpenStreetMap contributors",
-}).addTo(map);
+  // 4. Daily Fill Trend
+  console.log("Fetching daily fill trends data...");
+  const trends = await fetchData("daily-fill-trends");
 
-mockData.locations.forEach((location) => {
-  L.marker([location.lat, location.lng])
-    .addTo(map)
-    .bindPopup(`<b>${location.name}</b><br>Waste: ${location.waste} kg`);
-});
+  if (!Array.isArray(trends)) {
+    console.error("Daily Fill Trends data is not an array:", trends);
+    return;
+  }
+
+  const days = trends.map((d) => `${d.day_of_week.trim()} (${d.date})`);
+  console.log("Rendering daily fill trends chart with data:", { days, trends });
+
+  new Chart(document.getElementById("dailyFillTrendChart"), {
+    type: "line",
+    data: {
+      labels: days,
+      datasets: [
+        {
+          label: "Avg Fill (%)",
+          data: trends.map((t) => t.avg_fill),
+          borderColor: "#9C27B0",
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "Daily Fill Trends (All Dustbins)",
+        },
+      },
+    },
+  });
+}
+
+// Initialize chart rendering
+console.log("Initializing chart rendering...");
+renderCharts();

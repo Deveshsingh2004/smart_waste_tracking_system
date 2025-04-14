@@ -2,61 +2,140 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Garbage Collection Analytics</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
-    <link rel="stylesheet" href="graphstyle.css" />
+    <title>Garbage Analytics Dashboard</title>
+    <!-- Load Chart.js from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="data.js" defer></script>
-    <script src="graphscript.js" defer></script>
+    <style>
+      :root {
+        --primary: #34a853;
+        --secondary: #4285f4;
+        --accent: #ea4335;
+        --text: #333;
+        --light-bg: #f8f9fa;
+        --card-bg: #fff;
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--light-bg);
+        color: var(--text);
+        padding: 20px;
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      .dashboard-header {
+        text-align: center;
+        padding: 20px 0 30px;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 30px;
+      }
+
+      .dashboard-header h1 {
+        color: var(--primary);
+        margin-bottom: 10px;
+        font-size: 2.2rem;
+      }
+
+      .dashboard-header p {
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        margin: 30px 0 20px;
+        padding-left: 20px;
+        border-left: 4px solid var(--primary);
+        font-size: 1.5rem;
+        color: var(--text);
+      }
+
+      .chart-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 25px;
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      .chart-box {
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        height: 350px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chart-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--secondary);
+      }
+
+      .chart-wrapper {
+        flex: 1;
+        position: relative;
+      }
+
+      canvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      @media (max-width: 768px) {
+        .chart-container {
+          grid-template-columns: 1fr;
+        }
+
+        .chart-box {
+          height: 300px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Smart Garbage Collection Analytics</h1>
+    <div class="dashboard-header">
+      <h1>Garbage Analytics Dashboard</h1>
+      <p>Real-time analytics and insights for waste management optimization</p>
+    </div>
 
-      <!-- Key Metrics -->
-      <div class="metrics">
-        <div class="metric">
-          <h3>Total Waste Collected</h3>
-          <p id="totalWaste">0 kg</p>
-        </div>
-        <div class="metric">
-          <h3>Bins Collected Today</h3>
-          <p id="binsCollected">0</p>
-        </div>
-        <div class="metric">
-          <h3>On-Time Collection Rate</h3>
-          <p id="onTimeRate">0%</p>
+    <h2 class="section-header">Weekly Collection Analysis</h2>
+    <div class="chart-container">
+      <div class="chart-box">
+        <div class="chart-title">Weekly Waste Summary</div>
+        <div class="chart-wrapper">
+          <canvas id="weeklySummaryChart"></canvas>
         </div>
       </div>
-
-      <!-- Charts and Maps -->
-      <div class="grid">
-        <div class="card">
-          <h2>Garbage Fill Levels</h2>
-          <canvas id="fillLevelChart"></canvas>
-        </div>
-        <div class="card">
-          <h2>Peak Garbage Locations</h2>
-          <div id="map"></div>
-        </div>
-        <div class="card">
-          <h2>Waste Composition</h2>
-          <canvas id="wasteCompositionChart"></canvas>
-        </div>
-        <div class="card">
-          <h2>Collection Efficiency</h2>
-          <canvas id="collectionEfficiencyChart"></canvas>
-        </div>
-        <div class="card">
-          <h2>Garbage Generation Trends</h2>
-          <canvas id="generationTrendsChart"></canvas>
+      <div class="chart-box">
+        <div class="chart-title">Weekly Collection Peaks</div>
+        <div class="chart-wrapper">
+          <canvas id="weeklyPeaksChart"></canvas>
         </div>
       </div>
     </div>
+
+    <h2 class="section-header">Daily Usage Patterns</h2>
+    <div class="chart-container">
+      <div class="chart-box">
+        <div class="chart-title">Average Fill Rates by Hour</div>
+        <div class="chart-wrapper">
+          <canvas id="avgFillByHourChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Daily Fill Level Trends</div>
+        <div class="chart-wrapper">
+          <canvas id="dailyFillTrendChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
   </body>
 </html>
